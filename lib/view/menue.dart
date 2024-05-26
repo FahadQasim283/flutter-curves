@@ -16,7 +16,7 @@ class _MenueViewState extends State<MenueView> {
   List screens = const [
     ContactView(),
     HomeView(),
-    SearchView(),
+    MyHomePage(),
     SettingsView(),
   ];
   @override
