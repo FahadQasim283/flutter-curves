@@ -1,35 +1,37 @@
+import 'package:practice/utils/const.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MySharedPrefference {
-  static SharedPreferences? _preferences;
-  static Future<void> init() async =>
-      _preferences = await SharedPreferences.getInstance();
 
-  static Future<void> addTime() async {
-    List<String> time = [];
-    time = getTimeStamp();
-    time.add(DateTime.now().toString());
-    await _preferences!.setStringList('time', time);
-  }
+Future setCoordinates({
+  required String latitude,
+  required String longitude,
+  required String timeStamp,
+}) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  List<String> list = [];
+  list = await getCoordinates();
+  list.add("$latitude,$longitude,$timeStamp");
+  await prefs.setStringList(coordinatesKey, list);
+}
 
-  static List<String> getTimeStamp() =>
-      _preferences!.getStringList("time") ?? [];
+Future<List<String>> getCoordinates() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getStringList(coordinatesKey) ?? [];
+}
 
-  static Future setLts(String lats) async {
-    List<String> lts = [];
-    lts = getLats();
-    lts.add(lats);
-    await _preferences!.setStringList('lats', lts);
-  }
+Future<void> clearCoordinates() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.remove(coordinatesKey);
+  await prefs.remove(timeKey);
+}
 
-  static List<String> getLats() => _preferences!.getStringList('lats') ?? [];
+//session management
+Future<void> setUserType(String userType) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString(userTypeKey, userType);
+}
 
-  static Future setLongs(String longs) async {
-    List<String> lng = [];
-    lng = getLongs();
-    lng.add(longs);
-    await _preferences!.setStringList('longs', lng);
-  }
-  static List<String> getLongs() => _preferences!.getStringList('longs') ?? [];
-  static Future<void> clear() async => await _preferences!.clear();
+Future<String> getUserType() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString(userTypeKey) ?? '';
 }

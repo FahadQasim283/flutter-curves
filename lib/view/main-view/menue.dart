@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:practice/view/contact.dart';
-import 'package:practice/view/home.dart';
-import 'package:practice/view/search.dart';
-import 'package:practice/view/settings.dart';
+import 'package:practice/view/main-view/contact.dart';
+import 'package:practice/view/main-view/home.dart';
+import 'package:practice/view/main-view/search.dart';
+import 'package:practice/view/main-view/settings.dart';
 
 class MenueView extends StatefulWidget {
   const MenueView({super.key});

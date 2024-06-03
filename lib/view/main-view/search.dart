@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:practice/main.dart';
-import 'package:practice/utils/bd_service.dart';
+import 'package:practice/utils/location.dart';
 import 'package:practice/utils/sharedpref.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -12,31 +11,29 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List lts = [];
-  List longs = [];
-  List timeStmp = [];
+
+  getLatsLongs() async {
+    lts = await getCoordinates();
+  }
 
   @override
   void initState() {
+    getLatsLongs();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    lts = MySharedPrefference.getLats();
-    longs = MySharedPrefference.getLongs();
-    timeStmp = MySharedPrefference.getTimeStamp();
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: [
             ElevatedButton(
-              onPressed: () async {
-              },
+              onPressed: () async {},
               child: const Text("Initialize  Service"),
             ),
             ElevatedButton(
               onPressed: () async {
-                await MySharedPrefference.clear();
                 setState(() {});
               },
               child: const Text("Clear Preferences"),
@@ -50,10 +47,10 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (context, index) {
           return Card(
               child: ListTile(
-                  onTap: () {},
-                  title: Text(
-                      "Latitude: ${lts[index]}  Longitude: ${longs[index]}"),
-                  subtitle: Text("Time: ${timeStmp[index]}"),
+                  onTap: () {
+                    
+                  },
+                  title: Text("${lts[index]}"),
                   leading: CircleAvatar(child: Text('${index + 1}'))));
         },
       ),
